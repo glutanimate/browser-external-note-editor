@@ -43,7 +43,7 @@ except ImportError:
 from ._version import __version__  # noqa: F401
 
 
-def initializeAddon():
+def initialize_addon():
     """Initializes add-on after performing a few checks
     
     Allows more fine-grained control over add-on execution, which can
@@ -57,7 +57,6 @@ def initializeAddon():
     if not checkFor2114ImportError(ADDON.NAME):
         return False
 
-    from .consts import ADDON
     from .libaddon.consts import setAddonProperties
 
     setAddonProperties(ADDON)
@@ -66,10 +65,10 @@ def initializeAddon():
 
     # maybeStartDebugging()
 
-    from .browser import initializeBrowser
-    from .editor import initializeEditor
+    from .browser import initialize_browser
+    from .editor import initialize_editor
 
-    initializeBrowser()
-    initializeEditor()
+    initialize_browser()
+    initialize_editor()
 
-initializeAddon()
+initialize_addon()

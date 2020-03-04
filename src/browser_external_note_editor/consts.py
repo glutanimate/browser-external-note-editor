@@ -46,7 +46,7 @@ __all__ = [
 ]
 
 
-class ADDON(object):
+class ADDON:
     """Class storing general add-on properties
     Property names need to be all-uppercase with no leading underscores
     """

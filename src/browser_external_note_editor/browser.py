@@ -38,14 +38,14 @@ from anki.utils import isMac
 from aqt.browser import Browser
 from aqt import dialogs
 
-def onRowChanged(self, current, previous):
+def on_row_changed(self, current, previous):
     """Disable inbuilt editor for externally edited note"""
     nids = self.selectedNotes()
     if nids and nids[0] == self.externalNid:
         self.form.splitter.widget(1).setVisible(False)
         self.editor.setNote(None)
 
-def onEditWindow(self):
+def on_edit_window(self):
     """Launch BrowserEditCurrent instance"""
     nids = self.selectedNotes()
     if len(nids) != 1:
@@ -55,22 +55,22 @@ def onEditWindow(self):
     self.externalNid = nids[0]
     self.editCurrent = aqt.dialogs.open("BrowserEditCurrent", self.mw, self)
 
-def onSetupMenus(self):
+def on_setup_menus(self):
     """Create menu entry and set attributes up"""
     menu = self.form.menuEdit
     menu.addSeparator()
     a = menu.addAction('Edit in New Window')
     a.setShortcut(QKeySequence("Ctrl+Alt+E"))
-    a.triggered.connect(lambda _, o=self: onEditWindow(o))
+    a.triggered.connect(lambda _, o=self: on_edit_window(o))
     self.externalNid = None
     self.editCurrent = None
 
 
-def initializeBrowser():
+def initialize_browser():
     # Hook into menu setup
-    addHook("browser.setupMenus", onSetupMenus)
+    addHook("browser.setupMenus", on_setup_menus)
     
     # Modify existing methods
-    Browser.onRowChanged = wrap(Browser.onRowChanged, onRowChanged, "after")
+    Browser.onRowChanged = wrap(Browser.onRowChanged, on_row_changed, "after")
     # ↑ use hook here, requires Anki >2.1.5
     #Browser.deleteNotes = wrap(Browser.deleteNotes, onDeleteNotes, "before")

@@ -146,6 +146,6 @@ class BrowserEditCurrent(QDialog):
         self.editor.saveNow(callback)
 
 
-def initializeEditor():
+def initialize_editor():
     # Register new dialog in DialogManager:
     dialogs._dialogs["BrowserEditCurrent"] = [BrowserEditCurrent, None]
