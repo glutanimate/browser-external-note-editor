@@ -107,8 +107,10 @@ def initializeAddon():
 
     maybeStartDebugging()
 
-    from .tooltip import initializeTooltip
+    from .browser import initializeBrowser
+    from .editor import initializeEditor
 
-    initializeTooltip()
+    initializeBrowser()
+    initializeEditor()
 
 initializeAddon()
