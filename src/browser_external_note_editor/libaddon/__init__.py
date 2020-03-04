@@ -44,6 +44,14 @@ This module is the package entry-point.
 from ._version import __version__  # noqa: F401
 
 
+def maybeVendorTyping():
+    try:
+        import typing  # noqa: F401
+        import types  # noqa: F401
+    except ImportError:
+        registerLegacyVendorDir()
+
+
 def registerLegacyVendorDir():
     """Some modules like "typing" cannot be properly vendorized, so fall back
     to hacky sys.path modifications if necessary

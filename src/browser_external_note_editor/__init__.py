@@ -33,14 +33,12 @@
 Initializes add-on components.
 """
 
-try:
-    import typing  # noqa: F401
-    import types  # noqa: F401
-except ImportError:
-    from .libaddon import registerLegacyVendorDir
-    registerLegacyVendorDir()
 
 from ._version import __version__  # noqa: F401
+
+from .libaddon import maybeVendorTyping
+
+maybeVendorTyping()
 
 
 def initialize_addon():
@@ -70,5 +68,6 @@ def initialize_addon():
 
     initialize_browser()
     initialize_editor()
+
 
 initialize_addon()
