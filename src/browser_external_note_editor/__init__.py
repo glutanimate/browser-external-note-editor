@@ -62,9 +62,9 @@ def initializeAddon():
 
     setAddonProperties(ADDON)
 
-    from .libaddon.debug import maybeStartDebugging
+    # from .libaddon.debug import maybeStartDebugging
 
-    maybeStartDebugging()
+    # maybeStartDebugging()
 
     from .browser import initializeBrowser
     from .editor import initializeEditor
