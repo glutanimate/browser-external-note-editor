@@ -1,0 +1,15 @@
+{
+    "display_name": "External Note Editor for the Browser",
+    "module_name": "browser_external_note_editor",
+    "repo_name": "browser-external-note-editor",
+    "ankiweb_id": "1996266159",
+    "author": "Glutanimate",
+    "contact": "https://glutanimate.com",
+    "homepage": "https://github.com/glutanimate/browser-external-note-editor",
+    "copyright_start": 2017,
+    "tags": "",
+    "conflicts": [],
+    "targets": [
+        "anki21"
+    ]
+}
