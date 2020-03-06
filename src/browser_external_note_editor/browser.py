@@ -38,39 +38,42 @@ from anki.utils import isMac
 from aqt.browser import Browser
 from aqt import dialogs
 
-def on_row_changed(self, current, previous):
+def on_row_changed(browser, *args, **kwargs):
     """Disable inbuilt editor for externally edited note"""
-    nids = self.selectedNotes()
-    if nids and nids[0] == self.externalNid:
-        self.form.splitter.widget(1).setVisible(False)
-        self.editor.setNote(None)
+    # keep *args, **kwargs for < 2.1.20 compat
+    nids = browser.selectedNotes()
+    if nids and nids[0] == browser.externalNid:
+        browser.form.splitter.widget(1).setVisible(False)
+        browser.editor.setNote(None)
 
-def on_edit_window(self):
+def on_edit_window(browser):
     """Launch BrowserEditCurrent instance"""
-    nids = self.selectedNotes()
+    nids = browser.selectedNotes()
     if len(nids) != 1:
         return
-    self.form.splitter.widget(1).setVisible(False)
-    self.editor.setNote(None)
-    self.externalNid = nids[0]
-    self.editCurrent = aqt.dialogs.open("BrowserEditCurrent", self.mw, self)
+    browser.form.splitter.widget(1).setVisible(False)
+    browser.editor.setNote(None)
+    browser.externalNid = nids[0]
+    browser.editCurrent = aqt.dialogs.open("BrowserEditCurrent", browser.mw, browser)
 
-def on_setup_menus(self):
+def on_setup_menus(browser):
     """Create menu entry and set attributes up"""
-    menu = self.form.menuEdit
+    menu = browser.form.menuEdit
     menu.addSeparator()
     a = menu.addAction('Edit in New Window')
     a.setShortcut(QKeySequence("Ctrl+Alt+E"))
-    a.triggered.connect(lambda _, o=self: on_edit_window(o))
-    self.externalNid = None
-    self.editCurrent = None
+    a.triggered.connect(lambda _, o=browser: on_edit_window(o))
+    browser.externalNid = None
+    browser.editCurrent = None
 
 
 def initialize_browser():
-    # Hook into menu setup
-    addHook("browser.setupMenus", on_setup_menus)
+    try:  # >= 2.1.20
+        from aqt.gui_hooks import browser_did_change_row, browser_menus_did_init
+        browser_did_change_row.append(on_row_changed)
+        browser_menus_did_init.append(on_setup_menus)
     
-    # Modify existing methods
-    Browser.onRowChanged = wrap(Browser.onRowChanged, on_row_changed, "after")
-    # ↑ use hook here, requires Anki >2.1.5
-    #Browser.deleteNotes = wrap(Browser.deleteNotes, onDeleteNotes, "before")
+    except (ImportError, ModuleNotFoundError, AttributeError):
+        addHook("browser.setupMenus", on_setup_menus)
+        Browser.onRowChanged = wrap(Browser.onRowChanged, on_row_changed, "after")
+        # Browser.deleteNotes = wrap(Browser.deleteNotes, onDeleteNotes, "before")
