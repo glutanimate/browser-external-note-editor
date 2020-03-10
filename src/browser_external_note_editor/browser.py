@@ -37,6 +37,8 @@ from aqt.browser import Browser
 from aqt.qt import *
 from aqt.utils import tooltip
 
+from .config import config
+
 
 def hide_browser_editor(browser: Browser):
     if sip.isdeleted(browser) or not browser.editor:
@@ -76,7 +78,7 @@ def _on_setup_menus(browser):
     menu = browser.form.menuEdit
     menu.addSeparator()
     a = menu.addAction("Edit in New Window")
-    a.setShortcut(QKeySequence("Ctrl+Alt+E"))
+    a.setShortcut(QKeySequence(config["local"]["hotkey"]))
     a.triggered.connect(lambda _, o=browser: _on_edit_window(o))
     browser.external_editor = None
 
