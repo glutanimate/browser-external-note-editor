@@ -64,10 +64,10 @@ def initialize_addon():
     # maybeStartDebugging()
 
     from .browser import initialize_browser
-    from .editor import initialize_editor
+    from .editcurrent_browser import initialize_editcurrent_browser
 
     initialize_browser()
-    initialize_editor()
+    initialize_editcurrent_browser()
 
 
 initialize_addon()

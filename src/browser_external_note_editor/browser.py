@@ -29,51 +29,62 @@
 #
 # Any modifications to this file must keep this entire header intact.
 
-from aqt.qt import *
+import sip
+
 import aqt.editor
-from aqt.utils import saveGeom, restoreGeom
-from anki.hooks import addHook, remHook, wrap
-from anki.utils import isMac
-
+from anki.hooks import addHook
 from aqt.browser import Browser
-from aqt import dialogs
+from aqt.qt import *
+from aqt.utils import tooltip
 
-def on_row_changed(browser, *args, **kwargs):
-    """Disable inbuilt editor for externally edited note"""
-    # keep *args, **kwargs for < 2.1.20 compat
-    nids = browser.selectedNotes()
-    if nids and nids[0] == browser.externalNid:
-        browser.form.splitter.widget(1).setVisible(False)
-        browser.editor.setNote(None)
 
-def on_edit_window(browser):
-    """Launch BrowserEditCurrent instance"""
-    nids = browser.selectedNotes()
-    if len(nids) != 1:
+def hide_browser_editor(browser: Browser):
+    if sip.isdeleted(browser) or not browser.editor:
         return
     browser.form.splitter.widget(1).setVisible(False)
     browser.editor.setNote(None)
-    browser.externalNid = nids[0]
-    browser.editCurrent = aqt.dialogs.open("BrowserEditCurrent", browser.mw, browser)
 
-def on_setup_menus(browser):
+
+def show_browser_editor(browser: Browser):
+    if sip.isdeleted(browser) or not browser.editor or not browser.card:
+        return
+    browser.form.splitter.widget(1).setVisible(True)
+    browser.editor.setNote(browser.card.note(reload=True))
+
+
+def _on_edit_window(browser: Browser) -> bool:
+    """Launch BrowserEditCurrent instance"""
+    cids = browser.selectedCards()
+    if not cids or not browser.card:
+        tooltip("No cards selected")
+        return False
+    elif len(cids) > 1:
+        tooltip("Please select just one card")
+        return False
+
+    hide_browser_editor(browser)
+
+    browser.external_editor = aqt.dialogs.open(
+        "BrowserEditCurrent", browser.mw, browser, browser.card
+    )
+
+    return True
+
+
+def _on_setup_menus(browser):
     """Create menu entry and set attributes up"""
     menu = browser.form.menuEdit
     menu.addSeparator()
-    a = menu.addAction('Edit in New Window')
+    a = menu.addAction("Edit in New Window")
     a.setShortcut(QKeySequence("Ctrl+Alt+E"))
-    a.triggered.connect(lambda _, o=browser: on_edit_window(o))
-    browser.externalNid = None
-    browser.editCurrent = None
+    a.triggered.connect(lambda _, o=browser: _on_edit_window(o))
+    browser.external_editor = None
 
 
 def initialize_browser():
     try:  # >= 2.1.20
-        from aqt.gui_hooks import browser_did_change_row, browser_menus_did_init
-        browser_did_change_row.append(on_row_changed)
-        browser_menus_did_init.append(on_setup_menus)
-    
+        from aqt.gui_hooks import browser_menus_did_init
+
+        browser_menus_did_init.append(_on_setup_menus)
     except (ImportError, ModuleNotFoundError, AttributeError):
-        addHook("browser.setupMenus", on_setup_menus)
-        Browser.onRowChanged = wrap(Browser.onRowChanged, on_row_changed, "after")
-        # Browser.deleteNotes = wrap(Browser.deleteNotes, onDeleteNotes, "before")
+        addHook("browser.setupMenus", _on_setup_menus)
