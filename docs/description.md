@@ -1,12 +1,20 @@
 <!-- BANNER -->
 
-External Note Editor for the Browser is an add-on for Anki.
+Extends the card browser with a **shortcut** and menu action that **launches an external editor window** for the current note (`CTRL`+`ALT`+`E`).
 
-![](https://raw.githubusercontent.com/glutanimate/browser-external-note-editor/master/screenshots/screenshot.png)
+![](https://raw.githubusercontent.com/glutanimate/browser-external-note-editor/master/screenshots/screencast.gif)
 
 ### USAGE
 
+For a quick video demonstration and different use cases please see here:
+
+[![YouTube: Anki add-on: External Note Editor for the Card Browser](https://i.ytimg.com/vi/dEL8204lOq4/mqdefault.jpg)](https://youtu.be/dEL8204lOq4)
+
+(recorded on Anki 2.0)
+
 ### CONFIGURATION
+
+You can customize the hotkey by heading to Tools → Add-ons → and then double clicking on External Note Editor for the Browser, or selecting the add-on and then clicking on "Configure".
 
 <!-- CHANGELOG -->
 

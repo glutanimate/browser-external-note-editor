@@ -18,7 +18,7 @@ If you enjoy External Note Editor for the Browser, please consider supporting my
 
 ### Added
 
-- Anki 2.1 support!
+- Anki 2.1 support! (thanks to @ijgnd for his help with this!)
 - Customizable hotkey
 
 ### Fixed

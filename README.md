@@ -1,4 +1,4 @@
-<p align="center"><img src="screenshots/logo.png"></p>
+<p align="center"><img src="screenshots/screencast.gif"></p>
 
 <h2 align="center">External Note Editor for the Browser for Anki</h2>
 
@@ -12,9 +12,9 @@
 <a title="Follow me on Twitter" href="https://twitter.com/intent/user?screen_name=glutanimate"><img src="https://img.shields.io/twitter/follow/glutanimate.svg"></a>
 </p>
 
-> Intro quip
+> Comfortably browse through and edit your Anki cards
 
-This is an add-on for the spaced-repetition flashcard app [Anki](https://apps.ankiweb.net/).
+This is an add-on for the spaced-repetition flashcard app [Anki](https://apps.ankiweb.net/) that adds the ability to edit your flashcards in a separate window from Anki's card browser.
 
 ### Table of Contents <!-- omit in toc -->
 
@@ -27,10 +27,6 @@ This is an add-on for the spaced-repetition flashcard app [Anki](https://apps.an
 - [License and Credits](#license-and-credits)
 
 <!-- /MarkdownTOC -->
-
-<!-- ### Screenshots
-
-![](screenshots/screenshot.png) -->
 
 ### Installation
 
