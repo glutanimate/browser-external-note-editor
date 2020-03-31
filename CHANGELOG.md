@@ -12,6 +12,10 @@ If you enjoy External Note Editor for the Browser, please consider supporting my
 
 ## [Unreleased]
 
+## [1.0.0] - 2020-03-31
+
+### [Download](https://github.com/glutanimate/browser-external-note-editor/releases/tag/v1.0.0)
+
 ### Added
 
 - Anki 2.1 support!
