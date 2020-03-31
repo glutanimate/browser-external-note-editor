@@ -10,6 +10,21 @@ If you enjoy External Note Editor for the Browser, please consider supporting my
 
 :heart: My heartfelt thanks goes out to everyone who has supported this add-on through their tips, contributions, or any other means (you know who you are!). All of this would not have been possible without you. Thank you for being awesome!
 
+## [Unreleased]
+
+### Added
+
+- Anki 2.1 support!
+- Customizable hotkey
+
+### Fixed
+
+- Various smaller issues with dialog management
+
+### Changed
+
+- Rewrote major parts of the add-on, implement brand-new changes to the Anki add-on API (which should make the add-on future-proof for the Anki updates to come)
+
 ## [1.0.0-beta.1] - 2020-03-10
 
 ### Added
